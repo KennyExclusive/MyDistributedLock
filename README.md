@@ -19,8 +19,8 @@ redission提供的分布式锁：
 
 
 # 核心代码
-先上扣减库存的核心代码：
-
+# /controller/MyController.java：
+```java
  /**
   * 库存数量，实际库存应该是从数据库或者本地缓存中读取
   */
@@ -34,10 +34,10 @@ redission提供的分布式锁：
 
  /**
   * 校验库存
-	 * @param good  商品信息
-	 * @return 接口结果信息封装类
-	 */
-	private MyResultCode checkStock(Order good) {
+  * @param good  商品信息
+  * @return 接口结果信息封装类
+ */
+private MyResultCode checkStock(Order good) {
    if(good == null || StringUtils.isEmpty(good.getGoodName())) {
      //商品信息为空直接返回
      return MyResultCode.PARAM_IS_BLANK;
@@ -69,4 +69,5 @@ redission提供的分布式锁：
       log.error("系统出现异常[{}]",e.getMessage());
       return MyResultCode.PROCESS_ERROR;
     }
-	}
+}
+```
