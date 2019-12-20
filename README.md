@@ -29,15 +29,15 @@ redission提供的分布式锁：
  /**
   * redisson模板，类似于 jedisTemplate
   */
-	@Autowired
-	RedissonClient redisson;
+ @Autowired
+ RedissonClient redisson;
 
  /**
   * 校验库存
   * @param good  商品信息
   * @return 接口结果信息封装类
- */
-private MyResultCode checkStock(Order good) {
+  */
+ private MyResultCode checkStock(Order good) {
    if(good == null || StringUtils.isEmpty(good.getGoodName())) {
      //商品信息为空直接返回
      return MyResultCode.PARAM_IS_BLANK;
@@ -53,21 +53,21 @@ private MyResultCode checkStock(Order good) {
          //加锁失败
          return MyResultCode.PROCESS_FAULT;
        }
-      //预减库存 这里只是模拟一下，实际库存应该是从数据库或者本地缓存中读取
-      int newStock = STOCK_QUANTITY - 1;
-      if(newStock < 1) {
-        return MyResultCode.PROCESS_EMPTY;
-      }
-      //更新库存，这里只是模拟一下，实际写库存应该考虑写入数据库并且更新本地缓存
-      STOCK_QUANTITY = newStock;
-      log.info("减1个库存，库存变为[{}]",STOCK_QUANTITY);
-      //释放锁
-      fairLock.unlock();
-      return MyResultCode.SuccessStock;
+       //预减库存 这里只是模拟一下，实际库存应该是从数据库或者本地缓存中读取
+       int newStock = STOCK_QUANTITY - 1;
+       if(newStock < 1) {
+         return MyResultCode.PROCESS_EMPTY;
+       }
+       //更新库存，这里只是模拟一下，实际写库存应该考虑写入数据库并且更新本地缓存
+       STOCK_QUANTITY = newStock;
+       log.info("减1个库存，库存变为[{}]",STOCK_QUANTITY);
+       //释放锁
+       fairLock.unlock();
+       return MyResultCode.SuccessStock;
     } catch (InterruptedException e) {
-      e.printStackTrace();
-      log.error("系统出现异常[{}]",e.getMessage());
-      return MyResultCode.PROCESS_ERROR;
+       e.printStackTrace();
+       log.error("系统出现异常[{}]",e.getMessage());
+       return MyResultCode.PROCESS_ERROR;
     }
-}
+ }
 ```
