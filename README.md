@@ -70,7 +70,7 @@ redission提供的分布式锁：
     }
     
     if(fairLock != null ) {
-       fairLock.unlink();
+       fairLock.unlockAsync();
     }
 		
     return MyResultCode.PROCESS_ERROR;
