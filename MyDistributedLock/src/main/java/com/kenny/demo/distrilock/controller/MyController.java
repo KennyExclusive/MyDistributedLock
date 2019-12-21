@@ -84,7 +84,7 @@ public class MyController {
 		} 
 		
 		if(fairLock != null ) {
-		    fairLock.unlink();
+		    fairLock.unlockAsync();
 		}
 		
 		return MyResultCode.PROCESS_ERROR;
