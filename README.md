@@ -67,7 +67,12 @@ redission提供的分布式锁：
     } catch (InterruptedException e) {
        e.printStackTrace();
        log.error("系统出现异常[{}]",e.getMessage());
-       return MyResultCode.PROCESS_ERROR;
     }
+    
+    if(fairLock != null ) {
+       fairLock.unlink();
+    }
+		
+    return MyResultCode.PROCESS_ERROR;
  }
 ```
